@@ -346,8 +346,7 @@ module.exports = (app) => {
         
     });
 
-    //UPLOAD IMAGE FILES
-
+}
     
 
-}
+    
