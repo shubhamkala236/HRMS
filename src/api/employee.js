@@ -270,7 +270,7 @@ module.exports = (app) => {
             role: req.body.role,
         };
         try {
-            const {name,role} = req.body;
+            // const {name,role} = req.body;
             const Id = req.params.id;
             const {data} = await service.UpdateUserDetail(Id,newUserData);        
             return res.status(200).json(data);
