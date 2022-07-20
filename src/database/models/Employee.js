@@ -8,7 +8,7 @@ const EmployeeSchema = new Schema({
     name: {
         type: String,
         required: [true, "Please enter your name"],
-        maxlength: [30, "Name cannot exceed 70 characters"],
+        maxlength: [30, "Name cannot exceed 30 characters"],
         minlength: [4, "Name should have more than 5 characters"],
       },
       email: {

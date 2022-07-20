@@ -164,6 +164,18 @@ module.exports = (app) => {
         }
     });
 
+    //Employee -USER Home page single employee details 
+    app.get('/employee/me',isAuthenticatedUser,async (req,res,next) => {
+        const employeeId = req.user._id;
+        try {
+            const { data} = await service.GetEmployeeById(employeeId);        
+            return res.status(200).json(data);
+        } catch (error) {
+            next(err)
+        }
+        
+    });
+
     
 
 

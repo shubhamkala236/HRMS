@@ -1,7 +1,8 @@
 
 const {EmployeeModel,UserModel,DummyModel } = require("../models");
 
-const { APIError } = require('../../utils/app-errors')
+const { APIError } = require('../../utils/app-errors');
+const ApiFeatures = require("../../utils/apifeatures");
 // const { APP_SECRET} = require('../config');
 // const jwt  = require('jsonwebtoken');
 
@@ -75,6 +76,17 @@ class EmployeeRepository {
            throw APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Get Employees')
         }
    }
+//     async Employees(){
+//         const resultPerPage = 2;
+//         try{
+//             const apiFeatures = new ApiFeatures(EmployeeModel.find(),query).pagination(resultPerPage);
+//             // return await EmployeeModel.find();
+//             const empl = await apiFeatures.query;
+//             return empl;
+//         }catch(err){
+//            throw APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Get Employees')
+//         }
+//    }
 
 //Admin find and update 
 async FindAndUpdate(Id,userData){
