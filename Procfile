@@ -1,1 +1,1 @@
-web :NODE_ENV=employee node src/index.js
+node src/index.js
