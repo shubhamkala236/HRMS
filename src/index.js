@@ -1,33 +1,30 @@
-const express = require('express');
+const express = require("express");
 // const dotenv = require('dotenv');
 // const mongoose = require('mongoose');
 // const cors = require('cors');
-const { PORT } = require('./config');
-const { databaseConnection } = require('./database/index');
+const { PORT } = require("./config");
+const { databaseConnection } = require("./database/index");
 // const { employee } = require('./api');
-const expressApp = require('./express-app');
+const expressApp = require("./express-app");
 
+const StartServer = async () => {
+	const app = express();
 
-const StartServer = async() => {
+	await databaseConnection();
 
-    const app = express();
-    
-    await databaseConnection();
-    
-    await expressApp(app);
+	await expressApp(app);
 
-    app.listen(PORT || 8001,()=>{
-        console.log("Connected to backend");
-    })
-    .on('error', (err) => {
-        console.log(err);
-        process.exit();
-    })
-}
+	app
+		.listen(PORT || 8001, () => {
+			console.log(`App is running on port ${PORT}`);
+		})
+		.on("error", (err) => {
+			console.log(err);
+			process.exit();
+		});
+};
 
 StartServer();
-
-
 
 // const app = express();
 // dotenv.config();
@@ -41,7 +38,7 @@ StartServer();
 //     }
 // };
 
-// // if disconnection occurs 
+// // if disconnection occurs
 // mongoose.connection.on("disconnected", ()=>{
 //     console.log("mongodb disconnected");
 // });
@@ -80,4 +77,3 @@ StartServer();
 //     connect()
 //     console.log("Connected to backend");
 // });
-
