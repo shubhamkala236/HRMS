@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=employee node src/index.js",
+    "start": "node src/index.js",
     "dev": "cross-env NODE_ENV=employee nodemon src/index.js"
   },
   "author": "",
