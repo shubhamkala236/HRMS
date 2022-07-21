@@ -41,8 +41,8 @@ filter(){
 }
 
 ///---------------------Pagination-------------------
-pagination(resultPerPage){
-    const currentPage = Number(this.queryStr.page) || 1;
+pagination(resultPerPage,quer){
+    const currentPage = Number(quer) || 1;
         //skip products for every page ex- page 2 doesnt have products of page 1 so skip is 10 products
     const skip = resultPerPage * (currentPage - 1);
 

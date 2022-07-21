@@ -202,8 +202,9 @@ module.exports = (app) => {
     
     //get all employees-----------------ADMIN-------------------
     app.get('/admin/employees',isAuthenticatedUser,authorizeRoles("admin"), async (req,res,next) => {
+        const quer = req.query.page;
         try {
-            const { data} = await service.GetAllEmployees();        
+            const { data} = await service.GetAllEmployees(quer);        
             return res.status(200).json(data);
         } catch (error) {
             next(err)

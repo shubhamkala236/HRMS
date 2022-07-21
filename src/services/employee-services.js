@@ -215,9 +215,9 @@ class EmployeeService{
        
     
     
-    async GetAllEmployees(){
+    async GetAllEmployees(quer){
         try{
-            const employee = await this.repository.Employees();
+            const employee = await this.repository.Employees(quer);
             
             return FormateData({
                 employee,

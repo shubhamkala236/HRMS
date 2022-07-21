@@ -69,24 +69,24 @@ class EmployeeRepository {
     }
 
     //read or get all employees from database
-    async Employees(){
-        try{
-            return await EmployeeModel.find();
-        }catch(err){
-           throw APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Get Employees')
-        }
-   }
 //     async Employees(){
-//         const resultPerPage = 2;
 //         try{
-//             const apiFeatures = new ApiFeatures(EmployeeModel.find(),query).pagination(resultPerPage);
-//             // return await EmployeeModel.find();
-//             const empl = await apiFeatures.query;
-//             return empl;
+//             return await EmployeeModel.find();
 //         }catch(err){
 //            throw APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Get Employees')
 //         }
 //    }
+    async Employees(quer){
+        const resultPerPage = 3;
+        try{
+            const apiFeatures = new ApiFeatures(EmployeeModel.find(),quer).pagination(resultPerPage,quer);
+            // return await EmployeeModel.find();
+            const empl = await apiFeatures.query;
+            return empl;
+        }catch(err){
+           throw APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Get Employees')
+        }
+   }
 
 //Admin find and update 
 async FindAndUpdate(Id,userData){
