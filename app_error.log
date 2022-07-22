@@ -10,3 +10,7 @@
 {"level":"error","message":"Fri Jul 22 2022 23:24:26 GMT+0530 (India Standard Time)-{\"name\":\"Data Not found\",\"statusCode\":500,\"isOperational\":true}","private":true}
 {"level":"error","message":"Fri Jul 22 2022 23:33:43 GMT+0530 (India Standard Time)-{\"name\":\"Data Not found\",\"statusCode\":500,\"isOperational\":true}","private":true}
 {"level":"error","message":"Fri Jul 22 2022 23:33:47 GMT+0530 (India Standard Time)-{\"name\":\"Data Not found\",\"statusCode\":500,\"isOperational\":true}","private":true}
+{"level":"error","message":"Sat Jul 23 2022 00:29:25 GMT+0530 (India Standard Time)-{\"statusCode\":401}","private":true}
+{"level":"error","message":"Sat Jul 23 2022 00:32:52 GMT+0530 (India Standard Time)-{\"statusCode\":403}","private":true}
+{"level":"error","message":"Sat Jul 23 2022 00:44:28 GMT+0530 (India Standard Time)-{\"name\":\"Data Not found\",\"statusCode\":500,\"isOperational\":true}","private":true}
+{"level":"error","message":"Sat Jul 23 2022 01:03:39 GMT+0530 (India Standard Time)-{\"statusCode\":401}","private":true}

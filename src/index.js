@@ -1,7 +1,7 @@
 const express = require('express');
 // const dotenv = require('dotenv');
 // const mongoose = require('mongoose');
-// const cors = require('cors');
+const cors = require('cors');
 const { PORT } = require('./config');
 const { databaseConnection } = require('./database/index');
 // const { employee } = require('./api');
@@ -9,9 +9,9 @@ const expressApp = require('./express-app');
 
 
 const StartServer = async() => {
-
-    const app = express();
     
+    const app = express();
+    // app.use(cors());
     await databaseConnection();
     
     await expressApp(app);

@@ -37,18 +37,26 @@ const EmployeeSchema = new Schema({
    adhaarNumber:{
         type: Number,
         required: true,
+        maxlength: [12, "Should be 12 digit"],
+        minlength: [12, "Should be 12 digit"],
     },
     panNumber:{
         type: Number,
         required: true,
+        maxlength: [10, "Should be 10 digit"],
+        minlength: [10, "Should be 10 digit"],
     },
     bankAccountNumber:{
         type: Number,
         required: true,
+        maxlength: [17, "Should be at max 17 digit"],
+        minlength: [9, "Should be at least 9 digit"],
     },
     ifsc:{
         type: Number,
         required: true,
+        maxlength: [11, "Should be at max 11 digit"],
+        minlength: [11, "Should be at least 11 digit"],
     },
     passBookNumber:{
         type: Number,

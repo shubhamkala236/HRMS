@@ -370,7 +370,7 @@ module.exports = (app) => {
     // });
 
     //Admin will add email of employee in dummy database
-    app.post('/employee/dummyAdd', async(req,res,next) => {
+    app.post('/employee/dummyAdd',isAuthenticatedUser,authorizeRoles("admin"), async(req,res,next) => {
         
         try {
             const {email} = req.body; 
