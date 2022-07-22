@@ -44,8 +44,12 @@ module.exports = (app) => {
             const {id} = req.params
             // validation
             const { data } =  await service.CreateEmployee({ name, email, dateOfBirth, phoneNumber,current_address, perma_address, adhaarNumber, panNumber,bankAccountNumber,ifsc,passBookNumber,role,designation,password,id, file });
-            
-            return res.json(data);
+            if(data)
+            {
+                return res.json("User has been registered Successfully");
+            }
+                
+            // return res.json(data);
             
         } catch (err) {
             console.log(err);
@@ -77,8 +81,9 @@ module.exports = (app) => {
             //saving token in cookie
             return res.status(200).cookie('token',token,options).json({
                 success:true,
-                userId,
-                token,
+                message:"Logged In Successfully",
+                // userId,
+                // token,
             });
             // return res.json(data);
         } catch (err) {
@@ -302,8 +307,10 @@ module.exports = (app) => {
         try {
             // const {name,role} = req.body;
             const Id = req.params.id;
-            const {data} = await service.UpdateUserDetail(Id,newUserData);        
-            return res.status(200).json(data);
+            const {data} = await service.UpdateUserDetail(Id,newUserData);
+            
+            return res.status(200).json("User Details updated Successfully");
+            // return res.status(200).json(data);
         } catch (err) {
             next(err)
         }
@@ -316,7 +323,8 @@ module.exports = (app) => {
         try {
             const Id = req.params.id;
             const {data} = await service.DeleteEmployee(Id);        
-            return res.status(200).json(data);
+            return res.status(200).json("User Deleted Successfully");
+            // return res.status(200).json(data);
         } catch (err) {
             next(err)
         }
@@ -367,8 +375,12 @@ module.exports = (app) => {
             const {email} = req.body; 
             // validation
             const { data } =  await service.CreateDummyEmployee({email});
-       
-            return res.json(data);
+            if(data)
+            {
+                return res.json("Email has been sent to the user");
+
+            }
+            // return res.json(data);
             
         } catch (err) {
             next(err)    
