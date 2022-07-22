@@ -34,27 +34,7 @@ const EmployeeSchema = new Schema({
         type: String,
         required: true,
     },
-    
-    // identities:[
-    //     {
-    //         userId:{
-    //             type: Schema.Types.ObjectId,
-    //             ref: "identity",
-    //             required: true,
-    //         },
-    //         idName:{
-    //             type:String,
-    //             required: true
-    //         },
-    //         value:{
-    //             type:Number,
-    //             required:true
-    //         },
-            
-    //     }
-
-    // ],
-    adhaarNumber:{
+   adhaarNumber:{
         type: Number,
         required: true,
     },
@@ -76,11 +56,11 @@ const EmployeeSchema = new Schema({
     },
     role:{
         type:String,
-        default:"user"
+        default:"User"
     },
     designation:{
         type:String,
-        required:true
+        default:"N/A"
     },
     password:{
         type:String,
@@ -89,6 +69,10 @@ const EmployeeSchema = new Schema({
     salt:{
         type:String,
         required:true
+    },
+    status:{
+        type:String,
+        default:"Pending"
     },
     imageUrl:{
         type:String,

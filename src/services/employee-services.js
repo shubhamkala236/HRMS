@@ -1,6 +1,6 @@
 const { EmployeeRepository } = require("../database");
 const { FormateData,GeneratePassword, GenerateSalt, GenerateSignature, ValidatePassword } = require("../utils");
-const { APIError } = require('../utils/app-errors');
+const { APIError,ErrorHander } = require('../utils/app-errors');
 const {sendMail, sendResetMail} = require('../utils/sendEmail');
 const cloudinary = require('../utils/cloudinary');
 const { APP_SECRET} = require('../config');
@@ -43,9 +43,36 @@ class EmployeeService{
 
     //Admin Update User/id:
     async UpdateUserDetail(Id,userData){
+        const {imageUrl,password, name, email, dateOfBirth, phoneNumber,current_address, perma_address, adhaarNumber, panNumber,bankAccountNumber,ifsc,passBookNumber,role,designation,status } = userData;
+        const uploaded = await cloudinary.uploader.upload(imageUrl.tempFilePath);
+        const newUrl = uploaded.url;
+        //create new salt by admin
+        let salt = await GenerateSalt();
+        
+        let userPassword = await GeneratePassword(password, salt);
+
+        const updatedData = {
+            name: name,
+            email: email,
+            dateOfBirth:dateOfBirth,
+            phoneNumber:phoneNumber,
+            current_address:current_address,
+            perma_address:perma_address,
+            adhaarNumber:adhaarNumber,
+            panNumber:panNumber,
+            bankAccountNumber:bankAccountNumber,
+            ifsc:ifsc,
+            passBookNumber:passBookNumber,
+            designation:designation,
+            password:userPassword,
+            salt:salt,
+            status:status,
+            imageUrl:newUrl,
+            role:role,
+        };
         
         try {
-            const existingUser = await this.repository.FindAndUpdate(Id,userData);
+            const existingUser = await this.repository.FindAndUpdate(Id,updatedData);
             if(existingUser)
             {
                 return FormateData(existingUser);
@@ -135,13 +162,15 @@ class EmployeeService{
 
                 sendResetMail(user.email,user._id,resetToken);
 
-            }
                 
-            return;
+            }
+            
+            return user;
+
             
         } catch (err) {
             console.log(err);
-            throw new APIError('Data Not found', err)
+            throw next(new ErrorHander("No user found ", 401));
         }
     }
 
@@ -197,7 +226,6 @@ class EmployeeService{
                         return;
                     }
             }
-               
             // return FormateData(employee)
                     
                 

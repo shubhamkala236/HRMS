@@ -1,0 +1,12 @@
+{"level":"error","message":"Fri Jul 22 2022 22:16:50 GMT+0530 (India Standard Time)-{\"name\":\"Data Not found\",\"statusCode\":{},\"isOperational\":true}","private":true}
+{"level":"error","message":"Fri Jul 22 2022 22:18:39 GMT+0530 (India Standard Time)-{\"name\":\"Data Not found\",\"statusCode\":{},\"isOperational\":true}","private":true}
+{"level":"error","message":"Fri Jul 22 2022 22:19:24 GMT+0530 (India Standard Time)-{\"name\":\"Data Not found\",\"statusCode\":{},\"isOperational\":true}","private":true}
+{"level":"error","message":"Fri Jul 22 2022 22:20:51 GMT+0530 (India Standard Time)-{\"name\":\"Data Not found\",\"statusCode\":{},\"isOperational\":true}","private":true}
+{"level":"error","message":"Fri Jul 22 2022 22:35:54 GMT+0530 (India Standard Time)-{\"statusCode\":401}","private":true}
+{"level":"error","message":"Fri Jul 22 2022 23:08:36 GMT+0530 (India Standard Time)-{\"statusCode\":401}","private":true}
+{"level":"error","message":"Fri Jul 22 2022 23:09:48 GMT+0530 (India Standard Time)-{\"statusCode\":401}","private":true}
+{"level":"error","message":"Fri Jul 22 2022 23:15:42 GMT+0530 (India Standard Time)-{\"statusCode\":401}","private":true}
+{"level":"error","message":"Fri Jul 22 2022 23:16:18 GMT+0530 (India Standard Time)-{\"statusCode\":401}","private":true}
+{"level":"error","message":"Fri Jul 22 2022 23:24:26 GMT+0530 (India Standard Time)-{\"name\":\"Data Not found\",\"statusCode\":500,\"isOperational\":true}","private":true}
+{"level":"error","message":"Fri Jul 22 2022 23:33:43 GMT+0530 (India Standard Time)-{\"name\":\"Data Not found\",\"statusCode\":500,\"isOperational\":true}","private":true}
+{"level":"error","message":"Fri Jul 22 2022 23:33:47 GMT+0530 (India Standard Time)-{\"name\":\"Data Not found\",\"statusCode\":500,\"isOperational\":true}","private":true}

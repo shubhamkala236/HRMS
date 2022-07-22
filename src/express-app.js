@@ -17,7 +17,7 @@ module.exports = async (app) => {
     }));
 
     // const staticPath = path.join(__dirname,"/views")
-    app.use(express.static(path.join(__dirname,"/viwes")));
+    app.use(express.static(path.join(__dirname,"/views")));
     app.set('views',__dirname+'/views');
     app.set('view engine', 'ejs');
     
