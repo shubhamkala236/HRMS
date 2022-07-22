@@ -8,7 +8,7 @@ const EmployeeSchema = new Schema({
     name: {
         type: String,
         required: [true, "Please enter your name"],
-        maxlength: [30, "Name cannot exceed 70 characters"],
+        maxlength: [30, "Name cannot exceed 30 characters"],
         minlength: [4, "Name should have more than 5 characters"],
       },
       email: {
@@ -34,41 +34,29 @@ const EmployeeSchema = new Schema({
         type: String,
         required: true,
     },
-    
-    // identities:[
-    //     {
-    //         userId:{
-    //             type: Schema.Types.ObjectId,
-    //             ref: "identity",
-    //             required: true,
-    //         },
-    //         idName:{
-    //             type:String,
-    //             required: true
-    //         },
-    //         value:{
-    //             type:Number,
-    //             required:true
-    //         },
-            
-    //     }
-
-    // ],
-    adhaarNumber:{
+   adhaarNumber:{
         type: Number,
         required: true,
+        maxlength: [12, "Should be 12 digit"],
+        minlength: [12, "Should be 12 digit"],
     },
     panNumber:{
         type: Number,
         required: true,
+        maxlength: [10, "Should be 10 digit"],
+        minlength: [10, "Should be 10 digit"],
     },
     bankAccountNumber:{
         type: Number,
         required: true,
+        maxlength: [17, "Should be at max 17 digit"],
+        minlength: [9, "Should be at least 9 digit"],
     },
     ifsc:{
         type: Number,
         required: true,
+        maxlength: [11, "Should be at max 11 digit"],
+        minlength: [11, "Should be at least 11 digit"],
     },
     passBookNumber:{
         type: Number,
@@ -76,11 +64,11 @@ const EmployeeSchema = new Schema({
     },
     role:{
         type:String,
-        default:"user"
+        default:"User"
     },
     designation:{
         type:String,
-        required:true
+        default:"N/A"
     },
     password:{
         type:String,
@@ -89,6 +77,10 @@ const EmployeeSchema = new Schema({
     salt:{
         type:String,
         required:true
+    },
+    status:{
+        type:String,
+        default:"Pending"
     },
     imageUrl:{
         type:String,

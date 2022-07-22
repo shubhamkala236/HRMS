@@ -11,19 +11,19 @@ const HandleErrors = require('./utils/error-handler')
 
 
 module.exports = async (app) => {
+    app.use(cors());
+    app.use(express.json());
+    app.use(cookieParser())
     
     app.use(fileUpload({
         useTempFiles : true
     }));
 
     // const staticPath = path.join(__dirname,"/views")
-    app.use(express.static(path.join(__dirname,"/viwes")));
+    app.use(express.static(path.join(__dirname,"/views")));
     app.set('views',__dirname+'/views');
     app.set('view engine', 'ejs');
     
-    app.use(cors());
-    app.use(express.json());
-    app.use(cookieParser())
 
     app.use(express.urlencoded({ extended: true }));
 

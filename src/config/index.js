@@ -1,11 +1,15 @@
 const dotEnv  = require("dotenv");
-// console.log(process.env.NODE_ENV, process.env)
+dotEnv.config();
+
 // if (process.env.NODE_ENV !== 'employee') {
 //     const configFile =  `./.env.${process.env.NODE_ENV}`;
 //     dotEnv.config({ path:  configFile });
 // } else {
-    dotEnv.config();
+
+//     dotEnv.config();
 // }
+
+
 module.exports = {
     PORT: process.env.PORT,
     DB_URL: process.env.MONGODB_URI,

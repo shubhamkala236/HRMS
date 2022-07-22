@@ -49,6 +49,16 @@ class Errors extends Error{
     }
 }
 
+class ErrorHander extends Error{
+    constructor(message,statusCode){
+        super(message);
+        this.statusCode = statusCode
+
+        Error.captureStackTrace(this,this.constructer);
+    }
+}
+
+
 
 
 module.exports = {
@@ -57,5 +67,6 @@ module.exports = {
     BadRequestError,
     ValidationError,
     STATUS_CODES,
+    ErrorHander,
     Errors
 }
