@@ -1,7 +1,8 @@
 
 const {EmployeeModel,UserModel,DummyModel } = require("../models");
 
-const { APIError } = require('../../utils/app-errors')
+const { APIError } = require('../../utils/app-errors');
+const ApiFeatures = require("../../utils/apifeatures");
 // const { APP_SECRET} = require('../config');
 // const jwt  = require('jsonwebtoken');
 
@@ -68,9 +69,21 @@ class EmployeeRepository {
     }
 
     //read or get all employees from database
-    async Employees(){
+//     async Employees(){
+//         try{
+//             return await EmployeeModel.find();
+//         }catch(err){
+//            throw APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Get Employees')
+//         }
+//    }
+    async Employees(queryStr){
+        const resultPerPage = 2;
+        const pageNumber = queryStr.page;
         try{
-            return await EmployeeModel.find();
+            const apiFeatures = new ApiFeatures(EmployeeModel.find(),queryStr).pagination(resultPerPage,pageNumber).search();
+            // return await EmployeeModel.find();
+            const empl = await apiFeatures.query;
+            return empl;
         }catch(err){
            throw APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Get Employees')
         }
@@ -106,6 +119,18 @@ async Delete(Id){
    async FindById(id){
     try{
         return await EmployeeModel.findById(id);
+    }catch(err){
+        throw APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Find Employee')
+    }
+
+}
+
+//User updates own password
+async UserUpdatePass(Id,encryptedPass,newsalt){
+    const update = {password:encryptedPass,salt:newsalt}
+    try{
+        return await EmployeeModel.findByIdAndUpdate(Id,update);
+
     }catch(err){
         throw APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Find Employee')
     }
