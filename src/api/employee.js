@@ -176,6 +176,22 @@ module.exports = (app) => {
         
     });
 
+    //Employee- Update users own password
+    app.put('/employee/me/change-password',isAuthenticatedUser,async(req,res,next)=>{
+        const newPassword = req.body.newPassword;
+
+        try {
+            const Id = req.user.id;
+            const {data} = await service.UpdateMyPassword(Id,newPassword);  
+            if(data){
+
+                return res.status(200).json("password updated successfully");
+            }      
+        } catch (err) {
+            next(err)
+        }
+    })
+
     
 
 
@@ -202,9 +218,10 @@ module.exports = (app) => {
     
     //get all employees-----------------ADMIN-------------------
     app.get('/admin/employees',isAuthenticatedUser,authorizeRoles("admin"), async (req,res,next) => {
-        const quer = req.query.page;
+        // const quer = req.query.page;
+        const queryStr = req.query;
         try {
-            const { data} = await service.GetAllEmployees(quer);        
+            const { data} = await service.GetAllEmployees(queryStr);        
             return res.status(200).json(data);
         } catch (error) {
             next(err)

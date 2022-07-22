@@ -215,9 +215,9 @@ class EmployeeService{
        
     
     
-    async GetAllEmployees(quer){
+    async GetAllEmployees(queryStr){
         try{
-            const employee = await this.repository.Employees(quer);
+            const employee = await this.repository.Employees(queryStr);
             
             return FormateData({
                 employee,
@@ -284,6 +284,29 @@ class EmployeeService{
             return FormateData(null);
 
         } catch (err) {
+            throw new APIError('Data Not found', err)
+        }
+
+       
+    }
+
+    //user own password update
+    async UpdateMyPassword(Id,newPassword){
+        let salt = await GenerateSalt();
+        
+        let encryptedPass = await GeneratePassword(newPassword, salt);
+        try {
+            const existingUser = await this.repository.UserUpdatePass(Id,encryptedPass,salt);
+            if(existingUser)
+            {
+                return FormateData(existingUser);
+            }
+
+    
+            return FormateData(null);
+
+        } catch (err) {
+            console.log(err);
             throw new APIError('Data Not found', err)
         }
 

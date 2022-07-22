@@ -76,10 +76,11 @@ class EmployeeRepository {
 //            throw APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Get Employees')
 //         }
 //    }
-    async Employees(quer){
-        const resultPerPage = 3;
+    async Employees(queryStr){
+        const resultPerPage = 2;
+        const pageNumber = queryStr.page;
         try{
-            const apiFeatures = new ApiFeatures(EmployeeModel.find(),quer).pagination(resultPerPage,quer);
+            const apiFeatures = new ApiFeatures(EmployeeModel.find(),queryStr).pagination(resultPerPage,pageNumber).search();
             // return await EmployeeModel.find();
             const empl = await apiFeatures.query;
             return empl;
@@ -118,6 +119,18 @@ async Delete(Id){
    async FindById(id){
     try{
         return await EmployeeModel.findById(id);
+    }catch(err){
+        throw APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Find Employee')
+    }
+
+}
+
+//User updates own password
+async UserUpdatePass(Id,encryptedPass,newsalt){
+    const update = {password:encryptedPass,salt:newsalt}
+    try{
+        return await EmployeeModel.findByIdAndUpdate(Id,update);
+
     }catch(err){
         throw APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Find Employee')
     }
