@@ -81,12 +81,14 @@ module.exports = (app) => {
             }
             const token = data.token;
             const userId = data.id;
+            const name = data.name;
             // req.user = userId;
             //saving token in cookie
             return res.status(200).cookie('token',token,options).json({
                 success:true,
                 message:"Logged In Successfully",
-                // userId,
+                userId,
+                name
                 // token,
             });
             // return res.json(data);
