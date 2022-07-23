@@ -127,7 +127,7 @@ class EmployeeService{
                 
                 if(validPassword){
                     const token = await GenerateSignature({ email: existingUser.email, _id: existingUser._id});
-                    return FormateData({id: existingUser._id, token,name:existingUser.name });
+                    return FormateData({id: existingUser._id, token,name:existingUser.name,email:existingUser.email });
                 } 
             }
     
