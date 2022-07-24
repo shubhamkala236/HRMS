@@ -86,8 +86,7 @@ module.exports = (app) => {
             // req.user = userId;
             //saving token in cookie
             return res.status(200).cookie('token',token,options).json({
-                success:true,
-                message:"Logged In Successfully",
+            
                 userId,
                 name,
                 userEmail
@@ -116,6 +115,19 @@ module.exports = (app) => {
             message: "Logged Out",
           });
         
+    });
+    
+    //CheckAuth
+    app.get('/auth',isAuthenticatedUser,async (req,res,next) => {
+            const user = req.user;
+            // console.log(user);
+        if(!user){
+            return res.json("Please Login to access this resource")
+        }
+        const userId = user._id;
+        const {name,email} = user;
+        
+        return res.json({name,email,userId});
     });
 
     //Fortgot password
