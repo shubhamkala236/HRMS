@@ -34,6 +34,10 @@ const EmployeeSchema = new Schema({
         type: String,
         required: true,
     },
+    dateOfJoining: {
+        type: Date,
+        default:Date.now,
+    },
    adhaarNumber:{
         type: Number,
         required: true,

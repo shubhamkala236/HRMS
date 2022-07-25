@@ -52,8 +52,8 @@ module.exports = (app) => {
             
         } catch (err) {
             // console.log(err);
-            // next(err)   
-            throw new APIError('Data Not found', err) 
+            next(err);   
+            // throw new APIError('Data Not found', err) 
         }
         
     });
@@ -309,6 +309,7 @@ module.exports = (app) => {
             phoneNumber:req.body.phoneNumber,
             current_address:req.body.current_address,
             perma_address:req.body.perma_address,
+            dateOfJoining:req.body.dateOfJoining,
             adhaarNumber:req.body.adhaarNumber,
             panNumber:req.body.panNumber,
             bankAccountNumber:req.body.bankAccountNumber,
@@ -394,10 +395,10 @@ module.exports = (app) => {
             const { data } =  await service.CreateDummyEmployee({email});
             if(data)
             {
+                
                 return res.json("Email has been sent to the user");
-
+                
             }
-            // return res.json(data);
             
         } catch (err) {
             next(err)    

@@ -1,7 +1,7 @@
 
 const {EmployeeModel,UserModel,DummyModel } = require("../models");
 
-const { APIError } = require('../../utils/app-errors');
+const { APIError,STATUS_CODES } = require('../../utils/app-errors');
 const ApiFeatures = require("../../utils/apifeatures");
 // const { APP_SECRET} = require('../config');
 // const jwt  = require('jsonwebtoken');
@@ -175,8 +175,8 @@ async UserUpdatePass(Id,encryptedPass,newsalt){
             return employeeResult;
             
         } catch (err) {
-            console.log(err);
-            throw APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Create Dummy Employee')
+            // console.log(err);
+            throw new APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Create Dummy Employee')
         }
         
     }

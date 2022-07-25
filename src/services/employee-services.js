@@ -37,13 +37,13 @@ class EmployeeService{
             return FormateData(employeeResult);
         }catch(err){
             console.log(err);
-            throw new APIError('Data Not found')
+            throw new APIError('Unable to create Employee')
         }
     }
 
     //Admin Update User/id:
     async UpdateUserDetail(Id,userData){
-        const {imageUrl,password, name, email, dateOfBirth, phoneNumber,current_address, perma_address, adhaarNumber, panNumber,bankAccountNumber,ifsc,passBookNumber,role,designation,status } = userData;
+        const {imageUrl,password, name, email, dateOfBirth, phoneNumber,current_address, perma_address, adhaarNumber, panNumber,bankAccountNumber,ifsc,passBookNumber,role,designation,status,dateOfJoining } = userData;
         const uploaded = await cloudinary.uploader.upload(imageUrl.tempFilePath);
         const newUrl = uploaded.url;
         //create new salt by admin
@@ -58,6 +58,7 @@ class EmployeeService{
             phoneNumber:phoneNumber,
             current_address:current_address,
             perma_address:perma_address,
+            dateOfJoining:dateOfJoining,
             adhaarNumber:adhaarNumber,
             panNumber:panNumber,
             bankAccountNumber:bankAccountNumber,
@@ -83,7 +84,7 @@ class EmployeeService{
 
         } catch (err) {
             console.log(err);
-            throw new APIError('Data Not found', err)
+            throw new APIError('Data Not found')
         }
 
        
@@ -105,7 +106,7 @@ class EmployeeService{
 
         } catch (err) {
             console.log(err);
-            throw new APIError('Data Not found', err)
+            throw new APIError('Data Not found')
         }
 
        
@@ -135,7 +136,7 @@ class EmployeeService{
 
         } catch (err) {
             console.log(err);
-            throw new APIError('Data Not found', err)
+            throw new APIError('Data Not found')
         }
 
        
@@ -252,6 +253,7 @@ class EmployeeService{
             })
             
         }catch(err){
+            console.log(err);
             throw new APIError('Data Not found')
         }
     }
@@ -261,6 +263,7 @@ class EmployeeService{
             const employee = await this.repository.FindById(employeeId);
             return FormateData(employee)
         } catch (err) {
+            console.log(err);
             throw new APIError('Data Not found')
         }
     }
@@ -285,7 +288,8 @@ class EmployeeService{
             return FormateData({id: existingUser._id, token });
 
         }catch(err){
-            throw new APIError('Data Not found', err)
+            console.log(err);
+            throw new APIError('Data Not found')
         }
 
     }
@@ -312,7 +316,8 @@ class EmployeeService{
             return FormateData(null);
 
         } catch (err) {
-            throw new APIError('Data Not found', err)
+            console.log(err);
+            throw new APIError('Data Not found')
         }
 
        
@@ -335,7 +340,7 @@ class EmployeeService{
 
         } catch (err) {
             console.log(err);
-            throw new APIError('Data Not found', err)
+            throw new APIError('Data Not found')
         }
 
        
@@ -356,7 +361,7 @@ class EmployeeService{
             return FormateData(employeeResult);
         }catch(err){
             console.log(err);
-            throw new APIError('Data Not found')
+            throw new APIError('Email could not be added')
         }
     }
 
