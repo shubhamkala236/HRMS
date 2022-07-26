@@ -67,3 +67,4 @@
 {"level":"error","message":"Tue Jul 26 2022 01:53:44 GMT+0530 (India Standard Time)-{\"name\":\"Data Not found\",\"statusCode\":500,\"isOperational\":true}","private":true}
 {"level":"error","message":"Tue Jul 26 2022 02:57:46 GMT+0530 (India Standard Time)-{\"name\":\"Email could not be added\",\"statusCode\":500,\"isOperational\":true}","private":true}
 {"level":"error","message":"Tue Jul 26 2022 10:37:10 GMT+0530 (India Standard Time)-{\"statusCode\":401}","private":true}
+{"level":"error","message":"Tue Jul 26 2022 21:24:28 GMT+0530 (India Standard Time)-{\"statusCode\":401}","private":true}

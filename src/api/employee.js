@@ -83,13 +83,18 @@ module.exports = (app) => {
             const userId = data.id;
             const name = data.name;
             const userEmail = data.email;
+            const role = data.role;
+            
+            
             // req.user = userId;
+            // console.log(data);
             //saving token in cookie
             return res.status(200).cookie('token',token,options).json({
             
                 userId,
                 name,
                 userEmail,
+                role,
                 message: "success",
                 // token,
             });
