@@ -77,7 +77,7 @@ class EmployeeRepository {
 //         }
 //    }
     async Employees(queryStr){
-        const resultPerPage = 2;
+        const resultPerPage = 10;
         const pageNumber = queryStr.page;
         try{
             const apiFeatures = new ApiFeatures(EmployeeModel.find(),queryStr).pagination(resultPerPage,pageNumber).search();

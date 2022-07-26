@@ -89,7 +89,8 @@ module.exports = (app) => {
             
                 userId,
                 name,
-                userEmail
+                userEmail,
+                message: "success",
                 // token,
             });
             // return res.json(data);
