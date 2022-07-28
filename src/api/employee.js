@@ -378,45 +378,67 @@ module.exports = (app) => {
 
   // });
 
-  //   ----------------------ADMIN UPDATE EMPLOYEE-------------------
-  app.put(
-    "/admin/employee/:id",
-    isAuthenticatedUser,
-    authorizeRoles("admin"),
-    async (req, res, next) => {
-      const newUserData = {
-        name: req.body.name,
-        email: req.body.email,
-        dateOfBirth: req.body.dateOfBirth,
-        phoneNumber: req.body.phoneNumber,
-        current_address: req.body.current_address,
-        perma_address: req.body.perma_address,
-        dateOfJoining: req.body.dateOfJoining,
-        adhaarNumber: req.body.adhaarNumber,
-        panNumber: req.body.panNumber,
-        bankAccountNumber: req.body.bankAccountNumber,
-        ifsc: req.body.ifsc,
-        passBookNumber: req.body.passBookNumber,
-        designation: req.body.designation,
-        password: req.body.password,
-        status: req.body.status,
-        imageUrl: req.files.photo,
-        role: req.body.role,
-      };
-
-      try {
-        // const {name,role} = req.body;
-        const Id = req.params.id;
-        const { data } = await service.UpdateUserDetail(Id, newUserData);
-
-        return res.status(200).json("User Details updated Successfully");
-        // return res.status(200).json(data);
-      } catch (err) {
-        next(err);
+    //   ----------------------ADMIN UPDATE EMPLOYEE-------------------
+    app.put(
+      "/admin/employee/:id",
+      isAuthenticatedUser,
+      authorizeRoles("admin"),
+      async (req, res, next) => {
+      
+        try {
+          // const {name,role} = req.body;
+          const Id = req.params.id;
+          const imageUrl = req.files.photo;
+          const newUserData = {
+            name: req.body.name,
+            email: req.body.email,
+            dateOfBirth: req.body.dateOfBirth,
+            phoneNumber: req.body.phoneNumber,
+            current_address: req.body.current_address,
+            perma_address: req.body.perma_address,
+            adhaarNumber: req.body.adhaarNumber,
+            panNumber: req.body.panNumber,
+            bankAccountNumber: req.body.bankAccountNumber,
+            ifsc: req.body.ifsc,
+            passBookNumber: req.body.passBookNumber,
+            designation:req.body.designation,
+            password:req.body.password,
+            role:req.body.role,
+            status:req.body.status,
+            status:req.body.status,
+            photo:imageUrl
+          };
+          const { data } = await service.UpdateUserDetail(Id, newUserData);
+  
+          return res.status(200).json("User Details updated Successfully");
+          // return res.status(200).json(data);
+        } catch (err) {
+          next(err);
+        }
       }
-    }
-  );
+    );
 
+  
+    //   ----------------------ADMIN UPDATE EMPLOYEE Status from Table-------------------
+  
+    app.put(
+      "/admin/status-update/:id",
+      isAuthenticatedUser,
+      async (req, res, next) => {
+        try {
+          const Id = req.params.id;
+          const status = req.body.status;
+          const { data } = await service.UpdateUserStatus(Id, status);
+          if (data) {
+            return res.status(200).json("Details updated successfully");
+          }
+        } catch (err) {
+          next(err);
+        }
+      }
+    );
+
+  
   //   ----------------------ADMIN DELETE EMPLOYEE-------------------
   app.delete(
     "/admin/employee/:id",

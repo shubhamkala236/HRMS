@@ -8,7 +8,7 @@ const errorMiddleware = require('./api/middlewares/error');
 
 
 const { employee, appEvents  } = require('./api');
-// const HandleErrors = require('./utils/error-handler')
+const HandleErrors = require('./utils/error-handler')
 
 
 module.exports = async (app) => {
@@ -39,6 +39,7 @@ module.exports = async (app) => {
 
     // error handling
     app.use(errorMiddleware);
+    app.use(HandleErrors);
     
     // app.use(HandleErrors);
 }

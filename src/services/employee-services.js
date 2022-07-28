@@ -7,7 +7,7 @@ const {
   ValidatePassword,
 } = require("../utils");
 const { APIError, ErrorHander } = require("../utils/app-errors");
-const { sendMail, sendResetMail } = require("../utils/sendEmail");
+const { sendMail, sendResetMail,sendStatusMail } = require("../utils/sendEmail");
 const cloudinary = require("../utils/cloudinary");
 const { APP_SECRET } = require("../config");
 const jwt = require("jsonwebtoken");
@@ -76,10 +76,34 @@ class EmployeeService {
     }
   }
 
+  //Admin Update User status from dash board
+  async UpdateUserStatus(Id, status) {
+    
+    try {
+      const updatedData = {
+        status: status,
+      };
+    
+      const existingUser = await this.repository.FindAndUpdateStatus(Id, updatedData);
+      if (existingUser) {
+        // const id = existingUser._id;
+        const email = existingUser.email;
+        const Status = existingUser.status;
+        await sendStatusMail(email,Status);
+        return FormateData(existingUser);
+      }
+
+      // return FormateData(null);
+    } catch (err) {
+      console.log(err);
+      throw new APIError("Cannot Update");
+    }
+  }
+
   //Admin Update User/id:
   async UpdateUserDetail(Id, userData) {
     const {
-      imageUrl,
+      photo,
       password,
       name,
       email,
@@ -97,7 +121,7 @@ class EmployeeService {
       status,
       dateOfJoining,
     } = userData;
-    const uploaded = await cloudinary.uploader.upload(imageUrl.tempFilePath);
+    const uploaded = await cloudinary.uploader.upload(photo.tempFilePath);
     const newUrl = uploaded.url;
     //create new salt by admin
     let salt = await GenerateSalt();

@@ -81,3 +81,43 @@ module.exports.sendMail = async(emailInfo,id)=>{
         console.error(error);
       });
       }
+
+
+      //Status Update Email
+      module.exports.sendStatusMail = async(emailInfo,Status)=>{
+
+  
+
+        var apiKey = defaultClient.authentications['api-key'];
+        apiKey.apiKey = API_KEY;
+        
+        // Uncomment below two lines to configure authorization using: partner-key
+        // var partnerKey = defaultClient.authentications['partner-key'];
+        // partnerKey.apiKey = 'YOUR API KEY';
+        
+        var apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+        
+        var sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail(); // SendSmtpEmail | Values to send a transactional email
+        
+        sendSmtpEmail = {
+            to: [{
+                email: emailInfo,
+                name: 'John Doe'
+            }],
+            templateId: 6,
+            params: {
+                name: 'Death Note',
+                surname: 'Doe',
+                status:Status
+            },
+            // headers: {
+            //     'X-Mailin-custom': 'custom_header_1:custom_value_1|custom_header_2:custom_value_2'
+            // }
+        };
+        
+        apiInstance.sendTransacEmail(sendSmtpEmail).then(function(data) {
+          console.log('API called successfully. Returned data: ' + data);
+        }, function(error) {
+          console.error(error);
+        });
+        }

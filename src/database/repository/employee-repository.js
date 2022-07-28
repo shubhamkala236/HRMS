@@ -1,7 +1,8 @@
 
 const {EmployeeModel,UserModel,DummyModel,SalaryDetailsModel } = require("../models");
 
-const { APIError,STATUS_CODES } = require('../../utils/app-errors');
+const { APIError,STATUS_CODES,DBAPIError} = require('../../utils/app-errors');
+const { Error_Hander } = require("../../utils/app-errors");
 const ApiFeatures = require("../../utils/apifeatures");
 // const { APP_SECRET} = require('../config');
 // const jwt  = require('jsonwebtoken');
@@ -95,7 +96,26 @@ async FindAndUpdate(Id,userData){
         return await EmployeeModel.findByIdAndUpdate(Id,userData);
 
     }catch(err){
-        throw new APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Find Employee')
+        console.log(err);
+        throw new APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Find and update Employee')
+    }
+
+}
+//Admin find and update Status
+async FindAndUpdateStatus(Id,userData){
+    try{
+         const updated =  await EmployeeModel.findByIdAndUpdate(Id,userData,{
+            new: true,
+            runValidators: true,
+            useFindAndModify: false,
+          });
+
+         if(updated){
+            return updated;
+         }
+
+    }catch(err){
+        throw new APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Find and update Employee')
     }
 
 }
@@ -189,7 +209,9 @@ async UserUpdateDetails(Id,newUserData){
             
         } catch (err) {
             // console.log(err);
-            throw new APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Create Dummy Employee')
+            throw new DBAPIError('Database Error', STATUS_CODES.DUPLICATE_KEY, 'Unable to Create Dummy Employee user may be already added')
+            // throw new Error_Hander('User already added',1100);
+            
         }
         
     }

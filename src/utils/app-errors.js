@@ -4,6 +4,7 @@ const STATUS_CODES = {
     UN_AUTHORISED: 403,
     NOT_FOUND: 404,
     INTERNAL_ERROR: 500,
+    DUPLICATE_KEY:1100,
 }
 
 class AppError extends Error {
@@ -22,6 +23,12 @@ class AppError extends Error {
 //api Specific Errors
 class APIError extends AppError {
     constructor(name, statusCode = STATUS_CODES.INTERNAL_ERROR, description ='Internal Server Error',isOperational = true,){
+        super(name,statusCode,description,isOperational);
+    }
+}
+//duplicate
+class DBAPIError extends AppError {
+    constructor(name, statusCode = STATUS_CODES.DUPLICATE_KEY, description ='User is already added',isOperational = true,){
         super(name,statusCode,description,isOperational);
     }
 }
@@ -58,15 +65,27 @@ class ErrorHander extends Error{
     }
 }
 
+class Error_Hander extends Error{
+    constructor(message,statusCode){
+        super(message);
+        this.statusCode = statusCode
+
+        Error.captureStackTrace(this,this.constructer);
+    }
+}
+
+
 
 
 
 module.exports = {
     AppError,
+    DBAPIError,
     APIError,
     BadRequestError,
     ValidationError,
     STATUS_CODES,
     ErrorHander,
+    Error_Hander,
     Errors
 }
