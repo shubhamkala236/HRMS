@@ -389,6 +389,57 @@ class EmployeeService {
       throw new APIError("Data Not found");
     }
   }
+  //user update own details
+  async UpdateMyDetails(Id, newUserData) {
+   
+    try {
+      const {
+      // imageUrl,
+      name,
+      email,
+      // dateOfBirth,
+      phoneNumber,
+      current_address,
+      perma_address,
+      adhaarNumber,
+      panNumber,
+      // bankAccountNumber,
+      ifsc,
+      passBookNumber,
+      }=newUserData;
+
+    // const uploaded = await cloudinary.uploader.upload(imageUrl.tempFilePath);
+    // const newUrl = uploaded.url;
+    const updatedData = {
+      name: name,
+      email: email,
+      // dateOfBirth: dateOfBirth,
+      phoneNumber: phoneNumber,
+      current_address: current_address,
+      perma_address: perma_address,
+      adhaarNumber: adhaarNumber,
+      panNumber: panNumber,
+      // bankAccountNumber: bankAccountNumber,
+      ifsc:ifsc,
+      passBookNumber:passBookNumber,
+      // imageUrl: newUrl,
+    };
+
+      const existingUser = await this.repository.UserUpdateDetails(
+        Id,
+        updatedData
+      );
+
+      if (existingUser) {
+        return FormateData(existingUser);
+      }
+
+      // return FormateData(null);
+    } catch (err) {
+      console.log(err);
+      throw new APIError("Data Not found");
+    }
+  }
 
   //create dummy employee
   async CreateDummyEmployee(employeeInputs) {

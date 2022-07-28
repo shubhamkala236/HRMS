@@ -14,6 +14,13 @@ const StartServer = async() => {
     await databaseConnection();
     
     await expressApp(app);
+    //Handling uncaught Error
+    process.on("uncaughtException",(err)=>{
+    console.log(`Error: ${err.message}`);
+    console.log(`Shutting down the server due to uncaught Exception promise rejection`);
+    process.exit(1);
+
+})
 
     app.listen(PORT || 8001,()=>{
         console.log("Connected to backend");

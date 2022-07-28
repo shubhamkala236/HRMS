@@ -4,10 +4,11 @@ const cookieParser = require("cookie-parser");
 const  fileUpload = require('express-fileupload');
 const path = require('path');
 const ejs = require("ejs");
+const errorMiddleware = require('./api/middlewares/error');
 
 
 const { employee, appEvents  } = require('./api');
-const HandleErrors = require('./utils/error-handler')
+// const HandleErrors = require('./utils/error-handler')
 
 
 module.exports = async (app) => {
@@ -37,6 +38,7 @@ module.exports = async (app) => {
     employee(app);
 
     // error handling
-    app.use(HandleErrors);
+    app.use(errorMiddleware);
     
+    // app.use(HandleErrors);
 }

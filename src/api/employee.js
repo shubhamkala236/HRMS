@@ -265,6 +265,36 @@ module.exports = (app) => {
     }
   );
 
+  //Employee---user update own details
+  app.put(
+    "/employee/me/update-details",
+    isAuthenticatedUser,
+    async (req, res, next) => {
+      try {
+        const newUserData = {
+          name: req.body.name,
+          email: req.body.email,
+          // dateOfBirth: req.body.dateOfBirth,
+          phoneNumber: req.body.phoneNumber,
+          current_address: req.body.current_address,
+          perma_address: req.body.perma_address,
+          adhaarNumber: req.body.adhaarNumber,
+          panNumber: req.body.panNumber,
+          // bankAccountNumber: req.body.bankAccountNumber,
+          ifsc: req.body.ifsc,
+          passBookNumber: req.body.passBookNumber,
+        };
+        const Id = req.user.id;
+        const { data } = await service.UpdateMyDetails(Id, newUserData);
+        if (data) {
+          return res.status(200).json("Details updated successfully");
+        }
+      } catch (err) {
+        next(err);
+      }
+    }
+  );
+
   //get all employees-----------------ADMIN-------------------
   app.get(
     "/admin/employees",

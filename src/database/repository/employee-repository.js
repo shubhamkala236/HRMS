@@ -59,7 +59,7 @@ class EmployeeRepository {
                         return employeeResult;
 
             }
-
+            
             
         } catch (err) {
             console.log(err);
@@ -133,6 +133,19 @@ async UserUpdatePass(Id,encryptedPass,newsalt){
 
     }catch(err){
         throw new APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Find Employee')
+    }
+
+}
+
+//User update own details
+async UserUpdateDetails(Id,newUserData){
+    
+    try{
+        return await EmployeeModel.findByIdAndUpdate(Id,newUserData);
+
+    }catch(err){
+        console.log(err);
+        throw new APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Update Employee')
     }
 
 }

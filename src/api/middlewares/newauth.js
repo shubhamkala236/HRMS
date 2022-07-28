@@ -8,7 +8,24 @@ const {EmployeeModel} = require("../../database/models");
 
 
 
+// exports.isAuthenticatedUser =  async(req,res,next)=>{
+//     //just getting token value without json object
+//     const {token} = req.cookies;
+    
+//     if(!token){
+//         return next(new Errors("Please login to access this resource",401));
+//     }
 
+//     //if have  token then 
+//     const decodedData = jwt.verify(token, process.env.APP_SECRET);
+   
+
+//     //id is that which we created when creating jwt token
+//    req.user =  await EmployeeModel.findById(decodedData._id);
+//     // console.log(req.user);
+//     next();
+
+// };
 exports.isAuthenticatedUser =  async(req,res,next)=>{
     //just getting token value without json object
     const {token} = req.cookies;
@@ -19,6 +36,7 @@ exports.isAuthenticatedUser =  async(req,res,next)=>{
 
     //if have  token then 
     const decodedData = jwt.verify(token, process.env.APP_SECRET);
+   
 
     //id is that which we created when creating jwt token
    req.user =  await EmployeeModel.findById(decodedData._id);
@@ -26,6 +44,7 @@ exports.isAuthenticatedUser =  async(req,res,next)=>{
     next();
 
 };
+
 
 exports.authorizeRoles = (...roles)=>{
     
