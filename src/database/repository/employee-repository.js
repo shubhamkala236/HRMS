@@ -1,5 +1,5 @@
 
-const {EmployeeModel,UserModel,DummyModel } = require("../models");
+const {EmployeeModel,UserModel,DummyModel,SalaryDetailsModel } = require("../models");
 
 const { APIError,STATUS_CODES } = require('../../utils/app-errors');
 const ApiFeatures = require("../../utils/apifeatures");
@@ -63,7 +63,7 @@ class EmployeeRepository {
             
         } catch (err) {
             console.log(err);
-            throw APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Create Employee')
+            throw new APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Create Employee')
         }
         
     }
@@ -85,7 +85,7 @@ class EmployeeRepository {
             const empl = await apiFeatures.query;
             return empl;
         }catch(err){
-           throw APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Get Employees')
+           throw new APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Get Employees')
         }
    }
 
@@ -95,7 +95,7 @@ async FindAndUpdate(Id,userData){
         return await EmployeeModel.findByIdAndUpdate(Id,userData);
 
     }catch(err){
-        throw APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Find Employee')
+        throw new APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Find Employee')
     }
 
 }
@@ -110,7 +110,7 @@ async Delete(Id){
         // }
 
     }catch(err){
-        throw APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Find Employee')
+        throw new APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Find Employee')
     }
 
 }
@@ -120,7 +120,7 @@ async Delete(Id){
     try{
         return await EmployeeModel.findById(id);
     }catch(err){
-        throw APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Find Employee')
+        throw new APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Find Employee')
     }
 
 }
@@ -132,7 +132,7 @@ async UserUpdatePass(Id,encryptedPass,newsalt){
         return await EmployeeModel.findByIdAndUpdate(Id,update);
 
     }catch(err){
-        throw APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Find Employee')
+        throw new APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Find Employee')
     }
 
 }
@@ -161,7 +161,7 @@ async UserUpdatePass(Id,encryptedPass,newsalt){
             return existingUser;
         }catch(err){
             console.log(err);
-            throw APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Find Customer')
+            throw new APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Find Customer')
         }
     }
 
@@ -227,9 +227,35 @@ async UserUpdatePass(Id,encryptedPass,newsalt){
         }
     
     }
+    //Add salary Structure of Employee--------Admin
+    async AddSalary({Basic,HRA,Convince,LTA,SPL,PF_Employee,PF_Employer,Id}){
+        try{
+            const salary = new SalaryDetailsModel({
+                Basic,HRA,Convince,LTA,SPL,PF_Employee,PF_Employer,Employee_id:Id
+            })
+
+            const result = await salary.save();
+            return result;
 
 
+    
+        }catch(err){
+            throw new APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Create Employee Salary')
+        }
+    
+    }
 
+    //get single employee salary structure-----------Admin
+    //find by id employee
+   async FindSalaryById(id){
+    try{
+        const salaryDetails = await SalaryDetailsModel.findOne({Employee_id:id});
+        return salaryDetails;
+    }catch(err){
+        throw new APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Find Employee')
+    }
+
+}
 
 
 
