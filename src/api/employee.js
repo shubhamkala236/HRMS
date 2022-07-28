@@ -116,6 +116,7 @@ module.exports = (app) => {
       const perma_address = data.perma_address;
       const adhaarNumber = data.adhaarNumber;
       const panNumber = data.panNumber;
+      const bankAccountNumber = data.bankAccountNumber;
       const ifsc = data.ifsc;
       const passBookNumber = data.passBookNumber;
       const designation = data.designation;
@@ -137,6 +138,7 @@ module.exports = (app) => {
         perma_address,
         adhaarNumber,
         panNumber,
+        bankAccountNumber,
         ifsc,
         passBookNumber,
         designation,
