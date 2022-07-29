@@ -1,6 +1,7 @@
 const EmployeeService = require("../services/employee-services");
-// const { PublishCustomerEvent, PublishShoppingEvent } = require('../utils');
+const {PublishPayrollEvent,PublishAttendanceEvent} = require('../utils');
 // const UserAuth = require('./middlewares/auth')
+
 const {
   isAuthenticatedUser,
   authorizeRoles,
@@ -555,4 +556,103 @@ module.exports = (app) => {
       }
     }
   );
-};
+//--------------------microservice------------------------
+  //get attendance details of a employee
+  // app.get(
+  //   "/attendance-employee/:id",
+  //   isAuthenticatedUser,
+  //   authorizeRoles("admin"),
+  //   async (req, res, next) => {
+  //     const employeeId = req.params.id;
+  //     //get payload which we will send to our attendance service
+  //     try {
+      
+  //       const {data} = await service.getPayloadAttendance(employeeId,'getEmployeeAttendance');
+  //      const val = await PublishAttendanceEvent(data);
+  //       console.log(val.data);  
+  //       return res.status(200).json(data);
+  //     } 
+  //     catch (err) {
+  //       next(err);
+  //     }
+  //   }
+  // );
+
+  //Create payroll details of employee
+  app.post(
+    "/create-payroll-employee/:id/:month/:year",
+    isAuthenticatedUser,
+    authorizeRoles("admin"),
+    async (req, res, next) => {
+      try {
+      const employeeId = req.params.id;
+      const month = req.params.month;
+      const year = req.params.year;
+      //get payload which we will send to our payroll service
+        //get salary detail of a employee
+        const salaryDetail = await service.GetSalaryByIdForAttendance(employeeId);
+        // console.log(salaryDetail);
+        //send details to attendance service to create payroll
+        if(!salaryDetail){
+          return res.json({message:"No salary details of user"});
+        }
+        const {data} = await service.getPayloadPayroll(employeeId,salaryDetail,month,year,'createEmployeePayroll');
+        console.log(data);
+        //now publish the payload
+        PublishAttendanceEvent(data);  
+      //  console.log(val);
+        return res.status(200).json(data);
+      } 
+      catch (err) {
+        next(err);
+      }
+    }
+  );
+
+  //Create Salary Slip details of employee
+  app.post(
+    "/create-salarySlip-employee/:id/:month/:year",
+    isAuthenticatedUser,
+    authorizeRoles("admin"),
+    async (req, res, next)=>{
+
+      //get payload we will send to our attendance service to generate salary slip pdf
+      try {
+      const employeeId = req.params.id;
+      const month = req.params.month;
+      const year = req.params.year;
+      
+      //user details
+      const userDetail = await service.UserDetailsForSalarySlip(employeeId);
+      if(!userDetail){
+        return res.json({message:"No User details for this id"});
+      }
+      //salary details
+      const salaryDetail = await service.GetSalaryByIdForAttendance(employeeId);
+      if(!salaryDetail){
+        return res.json({message:"No salary details of user"});
+      }
+
+      //now generate payload with salary and user details
+
+      const {data} = await service.getPayloadSalarySlip(employeeId,salaryDetail,userDetail,month,year,'getPdf');
+
+      PublishAttendanceEvent(data);
+      return res.status(200).json(data);
+
+    } catch (error) {
+      next(error);
+    }
+
+
+
+
+
+
+    }
+  )
+
+
+
+
+}

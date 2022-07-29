@@ -4,7 +4,7 @@ const jwt  = require('jsonwebtoken');
 
 // const nodeMailer = require('nodemailer');
 
-// const axios = require('axios');
+const axios = require('axios');
 
 const { APP_SECRET} = require('../config');
 
@@ -49,42 +49,19 @@ module.exports.FormateData = (data) => {
         }
     }
 
-// SendinBlue api 
-// module.exports.SendEmail = async()=>{
-//         const client = Sib.ApiClient.instance
 
-//         const apiKey = client.authentications['api-key']
-//         apiKey.apiKey = process.env.API_KEY
+//sending data/payload to get other services from other modules
+module.exports.PublishPayrollEvent = async(payload) => {
         
-//         const campaignEmailApi = new Sib.campaignEmailApi()
+        axios.post('http://localhost:8003/app-events', {
+                payload
+        })
+}
 
-//         const sender = {
-//                 email:'lawkktd@gmail.com'
-//         }
-
-//         const receiver = [
-//                 {
-//                         email:'shinegami236@gmail.com'
-//                 },
-//         ]
-//         return await campaignEmailApi.sendCampaignEmail({
-//                 sender,
-//                 to: receiver,
-//                 subject: 'hey there from the API',
-//                 textContent:`Hey this is the text content`
-//         })
-// }
-
-
-// module.exports.PublishCustomerEvent = async(payload) => {
+module.exports.PublishAttendanceEvent = async(payload) => {
         
-//         axios.post('http://localhost:8000/customer/app-events', {
-//                 payload
-//         })
-// }
-
-// module.exports.PublishShoppingEvent = async(payload) => {
-//         axios.post('http://localhost:8000/shopping/app-events', {
-//                 payload
-//         })
-// }
+         axios.post('http://localhost:8002/app-events', {
+                payload
+        })
+        
+}

@@ -1,4 +1,6 @@
 const { EmployeeRepository } = require("../database");
+
+
 const {
   FormateData,
   GeneratePassword,
@@ -528,6 +530,112 @@ class EmployeeService {
       throw new APIError("Data Not found");
     }
   }
+  async GetSalaryByIdForAttendance(employeeId) {
+    try {
+      const employee = await this.repository.FindSalaryById(employeeId);
+      return FormateData(employee);
+    } catch (err) {
+      console.log(err);
+      throw new APIError("Data Not found");
+    }
+  }
+  //get user payload for salary slip
+  async UserDetailsForSalarySlip(employeeId) {
+    try {
+      const employee = await this.repository.FindUserById(employeeId);
+      return FormateData(employee);
+    } catch (err) {
+      console.log(err);
+      throw new APIError("Data Not found");
+    }
+  }
+  
+  //get payload to access other service
+  async getPayloadAttendance(userId,event){
+      const user = await this.repository.FindById(userId);
+
+      if(user){
+        const payload = {
+          event:event,
+          data:{userId}
+        }
+        return FormateData(payload);
+
+      }
+      else{
+        return FormateData({error:'No user found in database'})
+      }
+  }
+
+  //get payload to access payroll service
+  async getPayloadPayroll(employeeId,salaryDetail,month,year,event){
+    try {
+      const user = await this.repository.FindById(employeeId);
+      if(user){
+
+        const payload = {
+          event:event,
+          data:{employeeId,salaryDetail,month,year}
+        }
+        return FormateData(payload);
+      }
+      else{
+        return FormateData({error:'No user found in database'});
+      }
+      
+    } catch (error) {
+      throw new APIError("Data Not found");
+    }
+  }
+
+  //get payload to access payroll service
+  async getPayloadSalarySlip(employeeId,salaryDetail,userDetail,month,year,event){
+    try {
+      const user = await this.repository.FindById(employeeId);
+      if(user){
+        const payload = {
+          event:event,
+          data:{employeeId,salaryDetail,userDetail,month,year}
+        }
+
+        return FormateData(payload);
+      }
+      else{
+        return FormateData({error:'No user found in database'});
+      }
+      
+    } catch (error) {
+      throw new APIError("Data Not found");
+    }
+  }
+
+    
+    
+
+//employee services to others
+    //Events/services provided by employee to other apis
+    async SubscribeEvents(payload){
+ 
+      const { event, data } =  payload;
+
+      const { userId } = data;
+
+
+      switch(event){
+          case 'TEST':
+              console.log("WORKING FROM Employee");
+              break;
+          case 'GetSalaryById':
+              this.getAttendance(userId); 
+              break;
+      
+          default:
+              break;
+      }
+
+  }
+
+
 }
 
 module.exports = EmployeeService;

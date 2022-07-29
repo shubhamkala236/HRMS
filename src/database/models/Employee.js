@@ -68,7 +68,7 @@ const EmployeeSchema = new Schema({
     },
     role:{
         type:String,
-        default:"User"
+        default:"user"
     },
     designation:{
         type:String,

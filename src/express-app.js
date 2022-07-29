@@ -32,7 +32,7 @@ module.exports = async (app) => {
     app.use(express.urlencoded({ extended: true }));
 
     //Listeners
-    // appEvents(app);
+    appEvents(app);
 
     //api
     employee(app);

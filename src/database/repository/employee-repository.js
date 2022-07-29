@@ -81,7 +81,7 @@ class EmployeeRepository {
         const resultPerPage = 10;
         const pageNumber = queryStr.page;
         try{
-            const apiFeatures = new ApiFeatures(EmployeeModel.find(),queryStr).pagination(resultPerPage,pageNumber).search();
+            const apiFeatures = new ApiFeatures(EmployeeModel.find({}).where('role').equals('user'),queryStr).pagination(resultPerPage,pageNumber).search();
             // return await EmployeeModel.find();
             const empl = await apiFeatures.query;
             return empl;
@@ -286,6 +286,16 @@ async UserUpdateDetails(Id,newUserData){
     try{
         const salaryDetails = await SalaryDetailsModel.findOne({Employee_id:id});
         return salaryDetails;
+    }catch(err){
+        throw new APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Find Employee')
+    }
+
+}
+    //find by id employee user details
+   async FindUserById(id){
+    try{
+        const employee = await EmployeeModel.findOne({_id:id});
+        return employee;
     }catch(err){
         throw new APIError('API Error', STATUS_CODES.INTERNAL_ERROR, 'Unable to Find Employee')
     }
