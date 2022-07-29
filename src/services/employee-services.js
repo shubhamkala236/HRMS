@@ -608,6 +608,37 @@ class EmployeeService {
       throw new APIError("Data Not found");
     }
   }
+  //get payload to access pdf service
+  async getPayloadPdfSlip(employeeId,salaryDetail,userDetail,month,year,event){
+    try {
+      const user = await this.repository.FindById(employeeId);
+      if(user){
+        const payload = {
+          event:event,
+          data:{employeeId,salaryDetail,userDetail,month,year}
+        }
+
+        return FormateData(payload);
+      }
+      else{
+        return FormateData({error:'No user found in database'});
+      }
+      
+    } catch (error) {
+      throw new APIError("Data Not found");
+    }
+  }
+
+  //microservice to get user info
+  async getUserInfo(employeeId,month,year){
+    try {
+      const user = await this.repository.FindById(employeeId);
+     
+      
+    } catch (error) {
+      throw new APIError("Data Not found");
+    }
+  }
 
     
     
@@ -618,7 +649,7 @@ class EmployeeService {
  
       const { event, data } =  payload;
 
-      const { userId } = data;
+      const { employeeId,month,year } = data;
 
 
       switch(event){
@@ -627,6 +658,9 @@ class EmployeeService {
               break;
           case 'GetSalaryById':
               this.getAttendance(userId); 
+              break;
+          case 'getUserInfo':
+              this.getUserInfo(employeeId,month,year); 
               break;
       
           default:

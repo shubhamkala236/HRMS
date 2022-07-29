@@ -557,26 +557,7 @@ module.exports = (app) => {
     }
   );
 //--------------------microservice------------------------
-  //get attendance details of a employee
-  // app.get(
-  //   "/attendance-employee/:id",
-  //   isAuthenticatedUser,
-  //   authorizeRoles("admin"),
-  //   async (req, res, next) => {
-  //     const employeeId = req.params.id;
-  //     //get payload which we will send to our attendance service
-  //     try {
-      
-  //       const {data} = await service.getPayloadAttendance(employeeId,'getEmployeeAttendance');
-  //      const val = await PublishAttendanceEvent(data);
-  //       console.log(val.data);  
-  //       return res.status(200).json(data);
-  //     } 
-  //     catch (err) {
-  //       next(err);
-  //     }
-  //   }
-  // );
+  
 
   //Create payroll details of employee
   app.post(
@@ -635,7 +616,7 @@ module.exports = (app) => {
 
       //now generate payload with salary and user details
 
-      const {data} = await service.getPayloadSalarySlip(employeeId,salaryDetail,userDetail,month,year,'getPdf');
+      const {data} = await service.getPayloadSalarySlip(employeeId,salaryDetail,userDetail,month,year,'createSalarySlipSchema'); //getpdf
 
       PublishAttendanceEvent(data);
       return res.status(200).json(data);
@@ -643,14 +624,49 @@ module.exports = (app) => {
     } catch (error) {
       next(error);
     }
-
-
-
-
-
-
-    }
+  }
   )
+
+  //Employee send userDetails to pdf module from here
+  // app.post(
+  //   "/generatePdf-userdetail/:id/:month/:year",
+  //   isAuthenticatedUser,
+  //   authorizeRoles("admin"),
+  //   async (req, res, next)=>{
+
+  //     //get payload we will send to our pdf service to generate pdf
+  //     try {
+  //     const employeeId = req.params.id;
+  //     const month = req.params.month;
+  //     const year = req.params.year;
+  //       //get userDetails
+  //     const userDetail = await service.UserDetailsForSalarySlip(employeeId);
+  //     if(!userDetail){
+  //       return res.json({message:"No User details for this id"});
+  //     }
+
+  //     //salary details
+  //     const salaryDetail = await service.GetSalaryByIdForAttendance(employeeId);
+  //     if(!salaryDetail){
+  //       return res.json({message:"No salary details of user"});
+  //     }
+
+  //     //now generate payload with salary and user details
+  //     const {data} = await service.getPayloadPdfSlip(employeeId,salaryDetail,userDetail,month,year,'takeUserDetailsFromEmployee');
+      
+
+    
+
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // }
+  // )
+
+
+
+
+
 
 
 
